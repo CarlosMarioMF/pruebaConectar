@@ -5,6 +5,7 @@ import 'package:prueba_conectarse/src/pages/register2_page.dart';
 
 import 'package:prueba_conectarse/src/pages/home_page.dart';
 import 'package:prueba_conectarse/src/pages/login_page.dart';
+import 'package:prueba_conectarse/src/pages/register_page.dart';
  
 void main() => runApp(MyApp());
  
@@ -20,6 +21,7 @@ class MyApp extends StatelessWidget {
         initialRoute: 'login',
         routes: {
           'login'   : (BuildContext context) => LoginPage(),
+          'register': (BuildContext context) => RegisterPage(),
           'register2': (BuildContext context) => Register2Page(),
           'home'    : (BuildContext context) => HomePage(),
         },

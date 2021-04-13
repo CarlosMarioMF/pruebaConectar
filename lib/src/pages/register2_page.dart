@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:prueba_conectarse/src/models/persona_model.dart';
 import 'package:prueba_conectarse/src/providers/personas_provider.dart';
+import 'package:prueba_conectarse/src/providers/usuario_provider.dart';
 
 
 class Register2Page extends StatefulWidget {
@@ -11,6 +12,7 @@ class Register2Page extends StatefulWidget {
 
 class _Register2PageState extends State<Register2Page> {
   final formKey = GlobalKey<FormState>();
+  
   final personasProvider = new PersonasProvider();
 
   PersonasModel persona = new PersonasModel();
@@ -44,13 +46,13 @@ class _Register2PageState extends State<Register2Page> {
                 _crearCelular(),
                 _crearPassword(),
                 _crearBoton(),
+                _regresar(),
               ],
             ),
           ),
         ),
         
       ),
-      
     );
   }
 
@@ -172,6 +174,21 @@ class _Register2PageState extends State<Register2Page> {
     print(persona.id);
     print(persona.celular);
     print(persona.password);
+  }
+
+  Widget _regresar() {
+    return RaisedButton.icon (
+      label: Text('Ya tengo una cuenta'),
+      icon: Icon(Icons.arrow_back_ios),
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(20.0),
+      ),
+      color: Colors.deepPurple,
+      textColor: Colors.white,
+      onPressed: (){
+        Navigator.pushReplacementNamed(context, 'login');
+      },
+    );
   }
 
 }

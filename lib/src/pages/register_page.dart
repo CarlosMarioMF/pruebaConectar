@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:prueba_conectarse/src/blocs/provider.dart';
+import 'package:prueba_conectarse/src/providers/usuario_provider.dart';
 
+class RegisterPage extends StatelessWidget {
 
-class LoginPage extends StatelessWidget {
+  final usuarioProvider = new UsuarioProvider();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -48,7 +50,7 @@ class LoginPage extends StatelessWidget {
             ),
             child: Column(
               children: <Widget>[
-                Text('Ingresar', style: TextStyle(fontSize: 20.0)),
+                Text('Registro', style: TextStyle(fontSize: 20.0)),
                 SizedBox( height: 60.0 ),
                 _crearEmail( bloc ),
                 SizedBox( height: 30.0 ),
@@ -58,11 +60,10 @@ class LoginPage extends StatelessWidget {
               ],
             ),
           ),
-
           FlatButton(
-            child: Text('Crear nueva cuenta'),
+            child: Text('Ya tengo una cuenta'),
             onPressed: (){ 
-              Navigator.pushReplacementNamed(context, 'register');
+              Navigator.pushReplacementNamed(context, 'login');
             }, 
           ),
           SizedBox( height: 100.0 )
@@ -133,6 +134,10 @@ class LoginPage extends StatelessWidget {
 
   Widget _crearBoton( LoginBloc bloc) {
 
+    // formValidStream
+    // snapshot.hasData
+    //  true ? algo si true : algo si false
+
     return StreamBuilder(
       stream: bloc.formValidStream,
       builder: (BuildContext context, AsyncSnapshot snapshot){
@@ -140,7 +145,7 @@ class LoginPage extends StatelessWidget {
         return RaisedButton(
           child: Container(
             padding: EdgeInsets.symmetric( horizontal: 80.0, vertical: 15.0),
-            child: Text('Ingresar'),
+            child: Text('Registrarse'),
           ),
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(5.0)
@@ -148,20 +153,17 @@ class LoginPage extends StatelessWidget {
           elevation: 0.0,
           color: Colors.deepPurple,
           textColor: Colors.white,
-          onPressed: snapshot.hasData ? ()=> _login(bloc, context) : null
+          onPressed: snapshot.hasData ? ()=> _register(bloc, context) : null
         );
       },
     );
   }
 
-  _login(LoginBloc bloc, BuildContext context) {
+  _register(LoginBloc bloc, BuildContext context) {
 
-    print('================');
-    print('Email: ${ bloc.email }');
-    print('Password: ${ bloc.password }');
-    print('================');
-
-    Navigator.pushReplacementNamed(context, 'home');
+    //Navigator.pushReplacementNamed(context, 'home');
+    //
+    usuarioProvider.nuevoUsuario(bloc.email, bloc.password);
 
   }
 
