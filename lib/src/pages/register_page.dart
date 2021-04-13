@@ -131,7 +131,7 @@ Widget _registerForm(BuildContext context) {
               SizedBox(height: 30.0,),
               _crearPassword(bloc),
               SizedBox(height: 30.0,),
-              _crearBoton(),
+              _crearBoton(bloc),
             ],
           ),
         ),
@@ -185,6 +185,7 @@ _crearEmail(LoginBloc bloc) {
             hintText: 'ejemplo@correo.com',
             labelText: 'Correo Electrónico',
             counterText: snapshot.data,
+            errorText: snapshot.error,
           ),
           onChanged: bloc.changeEmail,
         ),
@@ -258,6 +259,7 @@ _crearPassword(LoginBloc bloc) {
             ),
             labelText: 'ingrese contraseña',
             counterText: snapshot.data,
+            errorText: snapshot.error,
           ),
           onChanged: bloc.changePassword,
         ),
@@ -266,18 +268,26 @@ _crearPassword(LoginBloc bloc) {
   );
 }
 
-Widget _crearBoton() {
-  return RaisedButton(
-    shape: RoundedRectangleBorder(
-      borderRadius: BorderRadius.circular(5.0),
-    ),
-    color: Colors.deepPurple,
-    elevation: 0.5,
-    textColor: Colors.white,
-    child: Container(
-      child: Text('Registrarse'),
-      padding: EdgeInsets.symmetric(horizontal: 80.0, vertical: 15.0),
-    ),
-    onPressed: () {},
-  );
+Widget _crearBoton(LoginBloc bloc) {
+
+  //validFormStream
+  
+  return StreamBuilder(
+    stream: bloc.validFormStream ,
+    builder: (BuildContext context, AsyncSnapshot snapshot){
+      return RaisedButton(
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(5.0),
+        ),
+        color: Colors.deepPurple,
+        elevation: 0.5,
+        textColor: Colors.white,
+        child: Container(
+          child: Text('Registrarse'),
+          padding: EdgeInsets.symmetric(horizontal: 80.0, vertical: 15.0),
+        ),
+        onPressed: snapshot.hasData ? () {}: null,
+      );
+    },
+  ); 
 }
