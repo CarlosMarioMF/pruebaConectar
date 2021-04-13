@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:prueba_conectarse/src/blocs/provider.dart';
 import 'package:prueba_conectarse/src/pages/register2_page.dart';
 
-import 'package:prueba_conectarse/src/pages/register_page.dart';
 import 'package:prueba_conectarse/src/pages/home_page.dart';
 import 'package:prueba_conectarse/src/pages/login_page.dart';
  
@@ -18,11 +17,10 @@ class MyApp extends StatelessWidget {
         
         debugShowCheckedModeBanner: false,
         title: 'Material App',
-        initialRoute: 'register2',
+        initialRoute: 'login',
         routes: {
-          'register2': (BuildContext context) => Register2Page(),
-          'register': (BuildContext context) => RegisterPage(),
           'login'   : (BuildContext context) => LoginPage(),
+          'register2': (BuildContext context) => Register2Page(),
           'home'    : (BuildContext context) => HomePage(),
         },
         theme: ThemeData(

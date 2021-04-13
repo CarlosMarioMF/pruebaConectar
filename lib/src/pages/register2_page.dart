@@ -48,7 +48,9 @@ class _Register2PageState extends State<Register2Page> {
             ),
           ),
         ),
+        
       ),
+      
     );
   }
 
@@ -72,6 +74,7 @@ class _Register2PageState extends State<Register2Page> {
 
   Widget _crearEmail() {
     return TextFormField(
+      keyboardType: TextInputType.emailAddress,
       initialValue: persona.email,
       decoration: InputDecoration(
         labelText: 'Email',
