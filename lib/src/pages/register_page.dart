@@ -146,7 +146,7 @@ Widget _registerForm(BuildContext context) {
 
 _crearNombre(LoginBloc bloc) {
   return StreamBuilder(
-    //stream: bloc.emailStream,
+    stream: bloc.nombreStream,
     builder: (BuildContext context, AsyncSnapshot snapshot) {
       return Container(
         padding: EdgeInsets.symmetric(horizontal: 20.0),
@@ -161,8 +161,9 @@ _crearNombre(LoginBloc bloc) {
             hintText: 'Ingresa tu nombre',
             labelText: 'Nombre: ',
             counterText: snapshot.data,
+            errorText: snapshot.error,
           ),
-          //onChanged: bloc.changeEmail,
+          onChanged: bloc.changeNombre,
         ),
       );
     },
@@ -196,7 +197,7 @@ _crearEmail(LoginBloc bloc) {
 
 _crearID(LoginBloc bloc) {
   return StreamBuilder(
-    //stream: bloc.emailStream,
+    stream: bloc.idStream,
     builder: (BuildContext context, AsyncSnapshot snapshot) {
       return Container(
         padding: EdgeInsets.symmetric(horizontal: 20.0),
@@ -211,8 +212,9 @@ _crearID(LoginBloc bloc) {
             hintText: 'Número de identificación',
             labelText: 'Identidicación: ',
             counterText: snapshot.data,
+            errorText: snapshot.error,
           ),
-          //onChanged: bloc.changeEmail,
+          onChanged: bloc.changeID,
         ),
       );
     },
@@ -221,7 +223,7 @@ _crearID(LoginBloc bloc) {
 
 _crearCelular(LoginBloc bloc) {
   return StreamBuilder(
-    //stream: bloc.emailStream,
+    stream: bloc.celularStream,
     builder: (BuildContext context, AsyncSnapshot snapshot) {
       return Container(
         padding: EdgeInsets.symmetric(horizontal: 20.0),
@@ -236,8 +238,9 @@ _crearCelular(LoginBloc bloc) {
             hintText: 'Número de celular',
             labelText: 'Celular: ',
             counterText: snapshot.data,
+            errorText: snapshot.error,
           ),
-          //onChanged: bloc.changeEmail,
+          onChanged: bloc.changeCelular,
         ),
       );
     },
@@ -268,10 +271,21 @@ _crearPassword(LoginBloc bloc) {
   );
 }
 
-Widget _crearBoton(LoginBloc bloc) {
+_register(LoginBloc bloc, BuildContext context){
 
-  //validFormStream
-  
+  print('=================== ');
+  print('Nombre: ${bloc.nombre}');
+  print('Email: ${bloc.email}');
+  print('ID: ${bloc.id}');
+  print('Celular: ${bloc.celular}');
+  print('Password: ${bloc.password}');
+  print('=================== ');
+
+  Navigator.pushReplacementNamed(context, 'login');
+
+}
+
+Widget _crearBoton(LoginBloc bloc) {
   return StreamBuilder(
     stream: bloc.validFormStream ,
     builder: (BuildContext context, AsyncSnapshot snapshot){
@@ -286,8 +300,9 @@ Widget _crearBoton(LoginBloc bloc) {
           child: Text('Registrarse'),
           padding: EdgeInsets.symmetric(horizontal: 80.0, vertical: 15.0),
         ),
-        onPressed: snapshot.hasData ? () {}: null,
+        onPressed: snapshot.hasData ? () => _register(bloc, context) : null,
       );
     },
-  ); 
+  );
+
 }
