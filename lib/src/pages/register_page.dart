@@ -1,15 +1,31 @@
 import 'package:flutter/material.dart';
 import 'package:prueba_conectarse/src/blocs/provider.dart';
+import 'package:prueba_conectarse/src/models/persona_model.dart';
 
-class RegisterPage extends StatelessWidget {
+class RegisterPage extends StatefulWidget {
+
+  @override
+  _RegisterPageState createState() => _RegisterPageState();
+}
+
+class _RegisterPageState extends State<RegisterPage> {
+  final formKey = GlobalKey<FormState>();
+  PersonasModel persona = new PersonasModel();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Stack(
-        children: <Widget>[
-          _crearFondo(context),
-          _registerForm(context),
-        ],
+      body: SingleChildScrollView(
+        padding: EdgeInsets.all(15.0),
+        child: Form(
+          key: formKey,
+          child: Column(
+            children: <Widget>[
+              _crearFondo(context),
+              _registerForm(context, persona),
+            ],
+          )
+        ),
       ),
     );
   }
@@ -18,7 +34,7 @@ class RegisterPage extends StatelessWidget {
 Widget _crearFondo(BuildContext context) {
   final size = MediaQuery.of(context).size;
   final fondoMorado = Container(
-    height: size.height * 0.4,
+    height: size.height * 0.3,
     width: double.infinity,
     decoration: BoxDecoration(
       gradient: LinearGradient(
@@ -87,7 +103,7 @@ Widget _crearFondo(BuildContext context) {
   );
 }
 
-Widget _registerForm(BuildContext context) {
+Widget _registerForm(BuildContext context, PersonasModel persona) {
   final bloc = Provider.of(context);
   final size = MediaQuery.of(context).size;
 
@@ -96,12 +112,12 @@ Widget _registerForm(BuildContext context) {
       children: <Widget>[
         SafeArea(
             child: Container(
-          height: 200.0,
+          height: 20.0,
         )),
         Container(
           width: size.width * 0.85,
-          padding: EdgeInsets.symmetric(vertical: 50.0),
-          margin: EdgeInsets.symmetric(vertical: 30.0),
+          padding: EdgeInsets.symmetric(vertical: 10.0),
+          margin: EdgeInsets.symmetric(vertical: 10.0),
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(5.0),
             boxShadow: <BoxShadow>[
@@ -120,17 +136,17 @@ Widget _registerForm(BuildContext context) {
                 'Registro',
                 style: TextStyle(fontSize: 20.0),
               ),
-              SizedBox(height: 30.0,),
-              _crearNombre(bloc),
-              SizedBox(height: 30.0,),
+              SizedBox(height: 20.0,),
+              _crearNombre(bloc, persona),
+              SizedBox(height: 20.0,),
               _crearEmail(bloc),
-              SizedBox(height: 30.0,),
+              SizedBox(height: 20.0,),
               _crearID(bloc),
-              SizedBox(height: 30.0,),
+              SizedBox(height: 20.0,),
               _crearCelular(bloc),
-              SizedBox(height: 30.0,),
+              SizedBox(height: 20.0,),
               _crearPassword(bloc),
-              SizedBox(height: 30.0,),
+              SizedBox(height: 20.0,),
               _crearBoton(bloc),
             ],
           ),
@@ -144,27 +160,24 @@ Widget _registerForm(BuildContext context) {
   );
 }
 
-_crearNombre(LoginBloc bloc) {
+_crearNombre(LoginBloc bloc, PersonasModel persona) {
   return StreamBuilder(
     stream: bloc.nombreStream,
     builder: (BuildContext context, AsyncSnapshot snapshot) {
-      return Container(
-        padding: EdgeInsets.symmetric(horizontal: 20.0),
-        child: TextField(
-          autofocus: false,
-          textCapitalization: TextCapitalization.sentences,
-          decoration: InputDecoration(
-            icon: Icon(
-              Icons.account_circle,
-              color: Colors.deepPurple,
-            ),
-            hintText: 'Ingresa tu nombre',
-            labelText: 'Nombre: ',
-            counterText: snapshot.data,
-            errorText: snapshot.error,
-          ),
-          onChanged: bloc.changeNombre,
+      return TextFormField(
+        autofocus: false,
+        textCapitalization: TextCapitalization.sentences,
+        decoration: InputDecoration(
+          icon: Icon( Icons.account_circle, color: Colors.deepPurple,),
+          hintText: 'Ingresa tu nombre',
+          labelText: 'Nombre: ',
+          counterText: snapshot.data,
+          errorText: snapshot.error,
         ),
+        onChanged: bloc.changeNombre,
+        validator: (value) { 
+          if(value.length < 2){return 'Ingrese el nombre';}else{return null;}
+        },
       );
     },
   );
@@ -286,6 +299,8 @@ _register(LoginBloc bloc, BuildContext context){
 }
 
 Widget _crearBoton(LoginBloc bloc) {
+  
+  //if(!formKey.currenState.validate());
   return StreamBuilder(
     stream: bloc.validFormStream ,
     builder: (BuildContext context, AsyncSnapshot snapshot){
