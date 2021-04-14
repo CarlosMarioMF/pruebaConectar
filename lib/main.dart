@@ -13,6 +13,7 @@ void main() async {
   final prefs = new PreferenciasUsuario();
   await prefs.initPrefs();
   runApp(MyApp());
+  
 }
  
 class MyApp extends StatelessWidget {
