@@ -21,7 +21,7 @@ class _Register2PageState extends State<Register2Page> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Registro'),
+        title: Text('Completa tu Registro'),
         actions: <Widget>[
           IconButton(
             icon: Icon(Icons.photo_size_select_actual), 

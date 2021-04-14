@@ -8,7 +8,8 @@ import 'package:prueba_conectarse/src/pages/login_page.dart';
 import 'package:prueba_conectarse/src/pages/register_page.dart';
 import 'package:prueba_conectarse/src/preferences_usuario/preferencias_usuario.dart';
  
-void main() async{
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
   final prefs = new PreferenciasUsuario();
   await prefs.initPrefs();
   runApp(MyApp());
@@ -17,7 +18,7 @@ void main() async{
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    final prefs = new PreferenciasUsuario();
+  final prefs = new PreferenciasUsuario();
     print(prefs.token);
     
     return Provider(
